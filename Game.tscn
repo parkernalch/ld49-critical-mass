@@ -46,6 +46,19 @@ position = Vector2( 243.384, -372.187 )
 [node name="KillZone" parent="." instance=ExtResource( 4 )]
 position = Vector2( 4.41382, 451.114 )
 
+[node name="KillZone2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 4.41382, -488.886 )
+
+[node name="KillZone3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 386.414, 75.114 )
+rotation = 1.5708
+scale = Vector2( 2, 1 )
+
+[node name="KillZone4" parent="." instance=ExtResource( 4 )]
+position = Vector2( -387.586, 69.114 )
+rotation = 1.5708
+scale = Vector2( 2, 1 )
+
 [node name="left_bound" type="StaticBody2D" parent="."]
 position = Vector2( -281.157, 303.676 )
 collision_layer = 16

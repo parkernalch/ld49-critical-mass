@@ -23,6 +23,7 @@ onready var right_wing_particles : CPUParticles2D = $damaged_right_wing
 onready var left_wing_particles : CPUParticles2D = $damaged_left_wing
 onready var body_particles : CPUParticles2D = $damaged_body
 onready var explosion_particles : CPUParticles2D = $explosion
+onready var repulse_particles : CPUParticles2D = $repulse
 
 func _ready():
 	spawn_location = transform.origin
@@ -95,15 +96,26 @@ func _physics_process(delta):
 
 func boost_start():
 	fuel_timer.start()
+	fuel_level -= 10
+	Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
+	Events.emit_signal("PlayerBoostStarted")
 	is_collecting = false
 	is_boosting = true
 	fuel_timer.wait_time = 1.0 / boost_speed
 	Events.emit_signal("PlayerMovementSpeedChanged", boost_speed)
+	
+	repulse_particles.emitting = true
+	var obstacles = get_tree().get_nodes_in_group('obstacles')
+	for ob in obstacles:
+		var dist = (ob.transform.origin - transform.origin)
+		if dist.length_squared() < 100000:
+			ob.repulse(dist.normalized(), 50.0)
 
 func boost_end():
 	fuel_timer.stop()
 	is_collecting = true
 	is_boosting = false
+	Events.emit_signal("PlayerBoostEnded")
 	Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
 
 func _on_fuelTimer_timeout():

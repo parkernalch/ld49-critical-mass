@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
@@ -19,6 +19,8 @@
 [ext_resource path="res://sounds/start.wav" type="AudioStream" id=17]
 [ext_resource path="res://AudioManager.gd" type="Script" id=18]
 [ext_resource path="res://sounds/in_game.wav" type="AudioStream" id=19]
+[ext_resource path="res://sounds/boost_end.wav" type="AudioStream" id=20]
+[ext_resource path="res://sounds/boost_start.wav" type="AudioStream" id=21]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -357,6 +359,12 @@ stream = ExtResource( 19 )
 
 [node name="Explosion" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource( 15 )
+
+[node name="Boost" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 21 )
+
+[node name="BoostEnd" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 20 )
 
 [node name="Hit" type="AudioStreamPlayer" parent="AudioManager"]
 stream = ExtResource( 14 )
