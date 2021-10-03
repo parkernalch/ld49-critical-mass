@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
@@ -49,6 +49,10 @@ font_data = ExtResource( 8 )
 size = 20
 font_data = ExtResource( 9 )
 
+[sub_resource type="DynamicFont" id=8]
+extra_spacing_top = -7
+font_data = ExtResource( 2 )
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 10 )
 
@@ -61,7 +65,7 @@ script = ExtResource( 11 )
 environment = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 337.972, 378.756 )
+position = Vector2( 337.972, 360.918 )
 texture = SubResource( 2 )
 
 [node name="Viewport" type="Viewport" parent="."]
@@ -136,6 +140,7 @@ __meta__ = {
 }
 
 [node name="StatsPanel" type="Control" parent="."]
+visible = false
 margin_left = 56.0
 margin_top = 49.0
 margin_right = 914.0
@@ -232,7 +237,7 @@ margin_top = 52.0
 margin_right = 785.0
 margin_bottom = 72.0
 custom_fonts/font = SubResource( 7 )
-text = "0"
+text = "105"
 align = 2
 
 [node name="DistanceTraveledLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
@@ -266,7 +271,7 @@ margin_top = 96.0
 margin_right = 785.0
 margin_bottom = 116.0
 custom_fonts/font = SubResource( 7 )
-text = "0"
+text = "15056"
 align = 2
 
 [node name="RoundsPlayedLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
@@ -300,7 +305,7 @@ margin_top = 140.0
 margin_right = 785.0
 margin_bottom = 160.0
 custom_fonts/font = SubResource( 7 )
-text = "0"
+text = "--"
 align = 2
 
 [node name="BoostTimeLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
@@ -334,7 +339,7 @@ margin_top = 184.0
 margin_right = 785.0
 margin_bottom = 204.0
 custom_fonts/font = SubResource( 7 )
-text = "0"
+text = "15.9"
 align = 2
 
 [node name="CloseStatsButton" type="Button" parent="StatsPanel/Panel"]
@@ -369,6 +374,51 @@ stream = ExtResource( 17 )
 stream = ExtResource( 16 )
 
 [node name="KlaxxonTimer" type="Timer" parent="AudioManager"]
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control"]
+margin_left = 44.1011
+margin_top = 713.304
+margin_right = 235.101
+margin_bottom = 731.304
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+text = "<--- [ A, Left_Arrow]"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control"]
+margin_left = 438.101
+margin_top = 713.304
+margin_right = 638.101
+margin_bottom = 731.304
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+text = "[ D, Right_Arrow] --->"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Control"]
+margin_left = 241.101
+margin_top = 712.304
+margin_right = 441.101
+margin_bottom = 751.304
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+text = "[SPACE, SHIFT]
+TOGGLE OVERDRIVE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="GameOverMenu/RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="GameOverMenu/StartButton" to="." method="_on_StartButton_pressed"]

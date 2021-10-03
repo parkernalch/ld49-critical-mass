@@ -146,6 +146,8 @@ func load_from_userdata():
 	
 func write_statistics_to_panel():
 	for column in statistics.keys():
+		if column == 'dev_high':
+			continue
 		for row in statistics[column].keys():
 			statistics[column][row]["reference"].text = str(statistics[column][row]["value"])
 	pass
