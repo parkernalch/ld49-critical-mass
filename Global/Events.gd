@@ -5,3 +5,7 @@ signal PlayerTookDamage(areas_are_healthy)
 signal PlayerPickedUpPower(power)
 signal PlayerMovementSpeedChanged(new_speed)
 signal ShipWasDestroyed()
+signal GameEndedPlayer(stats)
+signal GameEndedOdometer(value)
+
+signal StartGame()

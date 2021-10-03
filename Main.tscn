@@ -1,20 +1,47 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Spawner.tscn" type="PackedScene" id=2]
-[ext_resource path="res://img/play_field.png" type="Texture" id=3]
+[ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Game.tscn" type="PackedScene" id=3]
 [ext_resource path="res://SpeedBar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://FuelBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://StatusDisplay.tscn" type="PackedScene" id=6]
 [ext_resource path="res://TimeDisplay.tscn" type="PackedScene" id=7]
-[ext_resource path="res://img/colors.png" type="Texture" id=18]
+[ext_resource path="res://font/EdgeOfTheGalaxyPosterItalic-x3o1m.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://font/CursedTimerUlil-Aznm.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://GameManager.gd" type="Script" id=10]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
 background_color = Color( 0.0588235, 0.164706, 0.247059, 1 )
 glow_enabled = true
 
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="DynamicFont" id=3]
+size = 80
+extra_spacing_char = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 34
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 25
+extra_spacing_char = 3
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 20
+font_data = ExtResource( 9 )
+
 [node name="Main" type="Node2D"]
+script = ExtResource( 10 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 512, 380 )
@@ -23,41 +50,291 @@ current = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
-[node name="colors" type="Sprite" parent="."]
-position = Vector2( -176.07, 423.064 )
-texture = ExtResource( 18 )
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 337.972, 378.756 )
+texture = SubResource( 2 )
 
-[node name="play_field" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 321.644, 400.108 )
-texture = ExtResource( 3 )
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 590, 680 )
+transparent_bg = true
+render_target_v_flip = true
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 320.386, 681.846 )
-movement_speed = 5.0
-
-[node name="Spawner" parent="." instance=ExtResource( 2 )]
-position = Vector2( 48.7242, 47.6791 )
-
-[node name="Spawner2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 149.518, 47.6791 )
-
-[node name="Spawner3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 251.571, 47.6791 )
-
-[node name="Spawner4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 349.845, 47.6791 )
-
-[node name="Spawner5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 450.639, 47.6791 )
-
-[node name="Spawner6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 548.913, 47.6791 )
+[node name="Game" parent="Viewport" instance=ExtResource( 3 )]
 
 [node name="StatusDisplay" parent="." instance=ExtResource( 6 )]
 
 [node name="TimeDisplay" parent="." instance=ExtResource( 7 )]
+margin_left = 825.448
+margin_top = 330.48
+margin_right = 825.448
+margin_bottom = 330.48
 
 [node name="SpeedBar" parent="." instance=ExtResource( 4 )]
 
 [node name="FuelBar" parent="." instance=ExtResource( 5 )]
+
+[node name="GameOverMenu" type="Control" parent="."]
+margin_left = 49.0
+margin_top = 299.0
+margin_right = 628.0
+margin_bottom = 440.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GameOverMenu"]
+margin_right = 579.0
+margin_bottom = 157.0
+custom_fonts/font = SubResource( 3 )
+text = "GAME OVER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RetryButton" type="Button" parent="GameOverMenu"]
+margin_left = 134.848
+margin_top = 97.39
+margin_right = 287.848
+margin_bottom = 134.39
+custom_fonts/font = SubResource( 4 )
+text = "RETRY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="GameOverMenu"]
+margin_left = 220.251
+margin_top = 20.2272
+margin_right = 373.251
+margin_bottom = 57.2272
+custom_fonts/font = SubResource( 4 )
+text = "START"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsButton" type="Button" parent="GameOverMenu"]
+margin_left = 301.909
+margin_top = 97.39
+margin_right = 454.909
+margin_bottom = 134.39
+custom_fonts/font = SubResource( 4 )
+text = "STATS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsPanel" type="Control" parent="."]
+margin_left = 56.0
+margin_top = 49.0
+margin_right = 914.0
+margin_bottom = 714.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="StatsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="StatsPanel/Panel"]
+margin_left = 26.0
+margin_top = 21.0
+margin_right = 232.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 5 )
+text = "STATISTICS"
+
+[node name="GridContainer" type="GridContainer" parent="StatsPanel/Panel"]
+anchor_top = 0.142
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 28.7401
+margin_top = -0.495003
+margin_right = -26.2599
+margin_bottom = -30.0
+custom_constants/vseparation = 24
+custom_constants/hseparation = 50
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header_Label" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_right = 221.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 6 )
+text = "TAG"
+
+[node name="Header_LastRoundScore" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 271.0
+margin_right = 382.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 6 )
+text = "LAST ROUND"
+
+[node name="Header_UserHighScore" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 432.0
+margin_right = 590.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 6 )
+text = "YOUR HIGH SCORE"
+
+[node name="Header_DevHighScore" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 640.0
+margin_right = 785.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 6 )
+text = "DEV HIGH SCORE"
+
+[node name="FuelCollectedLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_top = 52.0
+margin_right = 221.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+text = "FUEL COLLECTED"
+
+[node name="FuelCollectedLastRound" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 271.0
+margin_top = 52.0
+margin_right = 382.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="FuelCollectedUserHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 432.0
+margin_top = 52.0
+margin_right = 590.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="FuelCollectedDevHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 640.0
+margin_top = 52.0
+margin_right = 785.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="DistanceTraveledLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_top = 96.0
+margin_right = 221.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 7 )
+text = "DISTANCE TRAVELED"
+
+[node name="DistanceTraveledLastRound" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 271.0
+margin_top = 96.0
+margin_right = 382.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="DistanceTraveledUserHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 432.0
+margin_top = 96.0
+margin_right = 590.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="DistanceTraveledDevHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 640.0
+margin_top = 96.0
+margin_right = 785.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="RoundsPlayedLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_top = 140.0
+margin_right = 221.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 7 )
+text = "ROUNDS PLAYED"
+
+[node name="RoundsPlayedLastRound" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 271.0
+margin_top = 140.0
+margin_right = 382.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 7 )
+text = "-"
+align = 2
+
+[node name="RoundsPlayedUserHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 432.0
+margin_top = 140.0
+margin_right = 590.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="RoundsPlayedDevHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 640.0
+margin_top = 140.0
+margin_right = 785.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="BoostTimeLabel" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_top = 184.0
+margin_right = 221.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 7 )
+text = "BOOST TIME"
+
+[node name="BoostTimeLastRound" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 271.0
+margin_top = 184.0
+margin_right = 382.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="BoostTimeUserHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 432.0
+margin_top = 184.0
+margin_right = 590.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="BoostTimeDevHigh" type="Label" parent="StatsPanel/Panel/GridContainer"]
+margin_left = 640.0
+margin_top = 184.0
+margin_right = 785.0
+margin_bottom = 204.0
+custom_fonts/font = SubResource( 7 )
+text = "0"
+align = 2
+
+[node name="CloseStatsButton" type="Button" parent="StatsPanel/Panel"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 24.0
+margin_bottom = 24.0
+text = "X"
+
+[connection signal="pressed" from="GameOverMenu/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="GameOverMenu/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="GameOverMenu/StatsButton" to="." method="_on_StatsButton_pressed"]
+[connection signal="pressed" from="StatsPanel/Panel/CloseStatsButton" to="." method="_on_CloseStatsButton_pressed"]
