@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,15 @@
 [ext_resource path="res://font/EdgeOfTheGalaxyPosterItalic-x3o1m.otf" type="DynamicFontData" id=8]
 [ext_resource path="res://font/CursedTimerUlil-Aznm.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://GameManager.gd" type="Script" id=10]
+[ext_resource path="res://CameraShake.gd" type="Script" id=11]
+[ext_resource path="res://sounds/powerup.wav" type="AudioStream" id=12]
+[ext_resource path="res://sounds/select.wav" type="AudioStream" id=13]
+[ext_resource path="res://sounds/hit.wav" type="AudioStream" id=14]
+[ext_resource path="res://sounds/explosion.wav" type="AudioStream" id=15]
+[ext_resource path="res://sounds/warning.wav" type="AudioStream" id=16]
+[ext_resource path="res://sounds/start.wav" type="AudioStream" id=17]
+[ext_resource path="res://AudioManager.gd" type="Script" id=18]
+[ext_resource path="res://sounds/in_game.wav" type="AudioStream" id=19]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -46,6 +55,7 @@ script = ExtResource( 10 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 512, 380 )
 current = true
+script = ExtResource( 11 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
@@ -333,6 +343,32 @@ margin_top = 4.0
 margin_right = 24.0
 margin_bottom = 24.0
 text = "X"
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource( 18 )
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 19 )
+
+[node name="Explosion" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 15 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 14 )
+
+[node name="PowerUp" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 12 )
+
+[node name="Select" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 13 )
+
+[node name="Start" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 17 )
+
+[node name="Warning" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource( 16 )
+
+[node name="KlaxxonTimer" type="Timer" parent="AudioManager"]
 
 [connection signal="pressed" from="GameOverMenu/RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="GameOverMenu/StartButton" to="." method="_on_StartButton_pressed"]

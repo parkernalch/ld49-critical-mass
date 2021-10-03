@@ -29,3 +29,4 @@ func collect(_target : Node):
 func _on_ship_wasDestroyed():
 	speed = 0.0
 	set_physics_process(false)
+	Events.connect("StartGame", self, "queue_free")

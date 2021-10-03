@@ -1,18 +1,26 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://img/ship_in_game.png" type="Texture" id=2]
+[ext_resource path="res://circle_32.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.5347
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 69.1652
+radius = 108.298
 
 [sub_resource type="CapsuleShape2D" id=3]
 resource_local_to_scene = true
 radius = 29.3812
 height = 0.0
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.986364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0681818 ), -2.37413, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.123134, 1 )
+colors = PoolColorArray( 0.955078, 0.636796, 0.0596924, 1, 0.490234, 0.490234, 0.490234, 1, 1, 1, 1, 1 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -37,3 +45,53 @@ position = Vector2( 0, 8.02715 )
 shape = SubResource( 3 )
 
 [node name="FuelConsumptionTimer" type="Timer" parent="."]
+
+[node name="damaged_left_wing" type="CPUParticles2D" parent="."]
+position = Vector2( -26.9087, 0 )
+emitting = false
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1.19, 3.632 )
+scale_amount = 0.25
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+
+[node name="damaged_right_wing" type="CPUParticles2D" parent="."]
+position = Vector2( 26.9029, 0 )
+emitting = false
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1.19, 3.632 )
+scale_amount = 0.25
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+
+[node name="damaged_body" type="CPUParticles2D" parent="."]
+position = Vector2( 0.145782, 6.24334 )
+emitting = false
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 5.408, 3.632 )
+scale_amount = 0.6
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+
+[node name="explosion" type="CPUParticles2D" parent="."]
+position = Vector2( 0.145782, 6.24334 )
+emitting = false
+amount = 25
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 14.47
+direction = Vector2( 1, 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 303.1
+initial_velocity_random = 1.0
+scale_amount = 0.6
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )

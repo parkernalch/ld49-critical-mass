@@ -13,6 +13,7 @@ func _ready():
 	pass
 
 func _on_StartGame():
+	traveled_distance = 0.0
 	set_process(true)
 	pass
 

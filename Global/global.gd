@@ -5,6 +5,11 @@ var travel_speed : float = 1.0
 func _ready():
 	Events.connect("PlayerMovementSpeedChanged", self, "_on_player_movementSpeedChanged")
 	Events.connect("ShipWasDestroyed", self, "_on_player_wasDestroyed")
+	Events.connect("StartGame", self, "_on_startGame")
+	pass
+
+func _on_startGame():
+	travel_speed = 1.0
 	pass
 
 func _on_player_movementSpeedChanged(new_speed):

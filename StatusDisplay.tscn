@@ -23,7 +23,8 @@ texture = ExtResource( 3 )
 
 [node name="ship_left_wing" type="Sprite" parent="."]
 self_modulate = Color( 0.701961, 0.741176, 0.807843, 1 )
-position = Vector2( 758.426, 191.958 )
+position = Vector2( 759.005, 191.958 )
+scale = Vector2( 1.03238, 1 )
 texture = ExtResource( 5 )
 
 [node name="ship_right_wing" type="Sprite" parent="."]
