@@ -22,7 +22,16 @@ func _ready():
 	Events.connect("PlayerBoostEnded", self, "_on_player_boostEnd")
 	klaxxon_timer.wait_time = 1.0
 	klaxxon_timer.connect('timeout', self, "play_sound", ['warning'])
-	pass
+
+	explosion.volume_db = -20.0
+	hit.volume_db = -20.0
+	power_up.volume_db = -20.0
+	select.volume_db = -20.0
+	start.volume_db = -20.0
+	warning.volume_db = -20.0
+	in_game.volume_db = -20.0
+	boost_start.volume_db = -20.0
+	boost_end.volume_db = -20.0
 
 func play_sound(sound_name):
 	match sound_name:

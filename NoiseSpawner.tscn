@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://NoiseSpawner.gd" type="Script" id=1]
+
+[node name="NoiseSpawner" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="LeftBound" type="Node2D" parent="."]
+
+[node name="RightBound" type="Node2D" parent="."]

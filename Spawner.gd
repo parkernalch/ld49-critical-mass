@@ -11,8 +11,18 @@ onready var timer : Timer = $Timer
 onready var obstacle_timer : Timer = $ObstacleTimer
 var rng = RandomNumberGenerator.new()
 
+var neutron_noise = OpenSimplexNoise.new()
+var obstacle_noise = OpenSimplexNoise.new()
+
 func _ready():
 	rng.seed = randi()
+	neutron_noise.seed = randi()
+	neutron_noise.period = 2
+	neutron_noise.octaves = 4
+	obstacle_noise.seed = randi()
+	obstacle_noise.period = 3
+	obstacle_noise.octaves = 6
+	
 	timer.wait_time = rng.randf_range(1, 3)
 	obstacle_timer.wait_time = rng.randf_range(3.0, 9.0)
 	timer.connect('timeout', self, '_on_timer_timeout')
