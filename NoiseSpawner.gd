@@ -25,6 +25,7 @@ export var spawn_value : float = 1.0
 export var spawn_cooldown : float = 1.0
 
 var spawn_locations = []
+var offset
 
 func _ready():
 	noise.seed = randi()
@@ -33,10 +34,11 @@ func _ready():
 	Events.connect("PlayerMovementSpeedChanged", self, "_on_player_movementSpeedChanged")
 	Events.connect("StartGame", self, "_on_startGame")
 	Events.connect("GameEndedPlayer", self, "_on_endGame")
+	Events.connect("DifficultyIncreased", self, "_on_difficultyIncreased")
 	var x_pos_left : float =  left_bound.transform.origin.x
 	var x_pos_right : float = right_bound.transform.origin.x
-	var x_dist : float = abs(x_pos_right - x_pos_left)
-	var step_size = x_dist / float(subdivisions)
+	offset = abs(x_pos_right - x_pos_left)
+	var step_size = offset / float(subdivisions)
 
 	for i in range(subdivisions):
 		spawn_locations.append({
@@ -58,6 +60,10 @@ func _on_startGame():
 	set_process(true)
 	pass
 
+func _on_difficultyIncreased():
+	spawn_cooldown -= 0.1
+	spawn_value -= 0.1
+
 func _on_player_movementSpeedChanged(new_speed):
 	y_speed = new_speed
 
@@ -74,7 +80,7 @@ func check_for_spawn():
 func spawn(position):
 	var choice = rand_range(0, object_scenes.size())
 	var object = object_scenes[choice].instance()
-	var offset = sin(randi())
-	object.global_position = position + (Vector2.RIGHT * offset * 40)
+	var spawn_offset = sin(randi()) * offset
+	object.global_position = position + (Vector2.RIGHT * spawn_offset)
 #	object.speed = 1.0
 	get_parent().add_child(object)

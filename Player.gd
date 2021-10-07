@@ -32,6 +32,7 @@ func _ready():
 	Events.connect("ShipWasDestroyed", self, '_on_ship_wasDestroyed')
 	Events.connect("StartGame", self, "_on_StartGame")
 	fuel_timer.connect('timeout', self, '_on_fuelTimer_timeout')
+	Events.connect("PickupAcquired", self, '_on_pickup_acquired')
 	initialize()
 	
 func initialize():	
@@ -154,6 +155,8 @@ func _on_collisionArea_body_entered(body):
 			pass
 		else:
 			pass
+	elif body is Pickup:
+		body.pickup(self)
 	pass
 
 func _on_damageArea_body_entered(body):
@@ -166,6 +169,12 @@ func _on_damageArea_body_entered(body):
 		body_particles.emitting = not ship_areas_are_healthy[1]
 		left_wing_particles.emitting = not ship_areas_are_healthy[0]
 		body.queue_free()
+	elif body is Pickup:
+		body.queue_free()
+	pass
+
+func _on_pickup_acquired(type, value):
+	print('pickup: ' + str(type) + ' (' + str(value) + ')')
 	pass
 
 func take_damage(position):

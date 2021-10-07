@@ -1,6 +1,16 @@
 extends Control
 
 var traveled_distance : float = 0.0
+var difficulty_levels = [
+	1000,
+	5000,
+	15000,
+	30000,
+	70000,
+	120000,
+	280000,
+	450000,
+]
 
 onready var dist : Label = $dist_label
 
@@ -24,6 +34,12 @@ func _on_ship_wasDestroyed():
 func _process(delta):
 	traveled_distance += Global.travel_speed
 	set_display()
+	check_for_difficulty_increase()
+	
+func check_for_difficulty_increase():
+	if traveled_distance > difficulty_levels[0]:
+		Events.emit_signal("DifficultyIncreased")
+		difficulty_levels.pop_front()
 	
 func set_display():
 	var distance = floor(traveled_distance)

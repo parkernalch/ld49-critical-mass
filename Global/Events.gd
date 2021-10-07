@@ -11,3 +11,7 @@ signal GameEndedPlayer(stats)
 signal GameEndedOdometer(value)
 
 signal StartGame()
+
+signal DifficultyIncreased()
+
+signal PickupAcquired(pickup_type, value)

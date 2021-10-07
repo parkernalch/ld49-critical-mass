@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://img/play_field.png" type="Texture" id=1]
 [ext_resource path="res://NoiseSpawner.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://ObstacleLong.tscn" type="PackedScene" id=7]
 [ext_resource path="res://ObstacleShort.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Neutron.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ShieldPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://HealthPickup.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 33.4923, 52.3557 )
@@ -94,5 +96,18 @@ position = Vector2( -296, 0 )
 [node name="RightBound" parent="ObstacleSpawner" index="1"]
 position = Vector2( 284, 0 )
 
+[node name="PickupSpawn" parent="." instance=ExtResource( 2 )]
+position = Vector2( 19.347, -336.247 )
+object_scenes = [ ExtResource( 11 ), ExtResource( 10 ) ]
+subdivisions = 2
+spawn_cooldown = 40.0
+
+[node name="LeftBound" parent="PickupSpawn" index="0"]
+position = Vector2( -296, 0 )
+
+[node name="RightBound" parent="PickupSpawn" index="1"]
+position = Vector2( 284, 0 )
+
 [editable path="NeutronSpawner"]
 [editable path="ObstacleSpawner"]
+[editable path="PickupSpawn"]
