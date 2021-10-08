@@ -9,6 +9,7 @@ radius = 16.8587
 [node name="ShieldPickup" type="KinematicBody2D"]
 collision_layer = 8
 script = ExtResource( 1 )
+type = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

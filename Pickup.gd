@@ -7,7 +7,7 @@ enum PICKUP {
 }
 
 var value : int = 1
-var type : int
+export(PICKUP) var type
 var target
 
 func _process(delta):

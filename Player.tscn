@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://img/ship_in_game.png" type="Texture" id=2]
 [ext_resource path="res://circle_32.png" type="Texture" id=3]
+[ext_resource path="res://Shield.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.5347
@@ -116,3 +117,6 @@ gravity = Vector2( 0, 0 )
 scale_amount = 15.0
 scale_amount_curve = SubResource( 6 )
 color_ramp = SubResource( 7 )
+
+[node name="Shield" parent="." instance=ExtResource( 4 )]
+scale = Vector2( 3, 3 )

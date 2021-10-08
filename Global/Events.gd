@@ -15,3 +15,5 @@ signal StartGame()
 signal DifficultyIncreased()
 
 signal PickupAcquired(pickup_type, value)
+signal PlayerShieldToggled(active)
+signal PlayerHealed(areas_are_healthy)

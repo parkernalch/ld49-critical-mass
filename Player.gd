@@ -4,6 +4,7 @@ class_name Player
 var movement_vector : Vector2 = Vector2.ZERO
 export var movement_speed : float = 1.0
 var vertical_speed : float = 1.0
+var max_speed : float = 5.0
 var boost_speed : float = 10.0
 var fuel_level : int = 50
 var ship_areas_are_healthy : Array = [ true, true, true ] # [left, body, right]
@@ -146,8 +147,9 @@ func _on_collisionArea_body_entered(body):
 		if is_collecting:
 			body.collect(self)
 			fuel_level += body.size
-			vertical_speed += 0.1
-			Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
+			if vertical_speed < max_speed:
+				vertical_speed += 0.1
+				Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
 			neutrons_collected += 1
 			Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
 			if fuel_level >= 100:
@@ -170,7 +172,34 @@ func _on_damageArea_body_entered(body):
 		left_wing_particles.emitting = not ship_areas_are_healthy[0]
 		body.queue_free()
 	elif body is Pickup:
+		if body.type == Pickup.PICKUP.SHIELD:
+			Events.emit_signal("PlayerShieldToggled", true)
+		elif body.type == Pickup.PICKUP.HEALTH:
+			heal()
 		body.queue_free()
+	pass
+
+func heal():
+	match ship_areas_are_healthy.count(true):
+		3:
+			return
+		2:
+			ship_areas_are_healthy = [true, true, true]
+			pass
+		1:
+			if not ship_areas_are_healthy[1]:
+				ship_areas_are_healthy[1] = true
+				body_particles.emitting = false
+			else:
+				var heal_left = rand_range(0, 1) == 1
+				if heal_left:
+					ship_areas_are_healthy[0] = true
+					left_wing_particles.emitting = false
+				else:
+					ship_areas_are_healthy[2] = true
+					right_wing_particles.emitting = false
+			pass
+	Events.emit_signal("PlayerHealed", ship_areas_are_healthy)
 	pass
 
 func _on_pickup_acquired(type, value):
@@ -193,6 +222,7 @@ func take_damage(position):
 	vertical_speed = 1.0
 	Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
 	fuel_level = floor(fuel_level / (ship_areas_are_healthy.count(false) + 1))
+	Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
 	
 func damage_ship(side, offset):
 	if ship_areas_are_healthy.count(false) == 2:

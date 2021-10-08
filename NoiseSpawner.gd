@@ -3,15 +3,7 @@ class_name NoiseSpawner
 
 export(Array, Resource) var object_scenes = []
 
-#var neutron_scene = preload("res://Neutron.tscn")
-#var obstacle_scenes = [
-#	preload("res://ObstacleShort.tscn"),
-#	preload("res://ObstacleMedium.tscn"),
-#	preload("res://ObstacleLong.tscn")
-#]
-
 var noise = OpenSimplexNoise.new()
-#var obstacle_noise = OpenSimplexNoise.new()
 
 onready var left_bound : Node2D = $LeftBound
 onready var right_bound : Node2D = $RightBound
