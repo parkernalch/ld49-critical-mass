@@ -132,15 +132,20 @@ func _on_ship_wasDestroyed():
 func die():
 	fuel_timer.stop()
 	explosion_particles.emitting = true
+	sprite.modulate = Color(1.0,1.0,1.0,0.0)
+	call_deferred("deferred_game_ended")
+	pass
+
+func deferred_game_ended():
+	right_wing_particles.emitting = false
+	left_wing_particles.emitting = false
+	body_particles.emitting = false
 	Events.emit_signal("GameEndedPlayer", {
 		"neutrons_collected": neutrons_collected,
 		"boost_time": boost_time
 	})
-	sprite.modulate = Color.black
-	right_wing_particles.emitting = false
-	left_wing_particles.emitting = false
-	body_particles.emitting = false
-	pass
+	set_process(false)
+	set_physics_process(false)
 
 func _on_collisionArea_body_entered(body):
 	if body is Neutron:

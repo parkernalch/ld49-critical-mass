@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
@@ -21,14 +21,70 @@
 [ext_resource path="res://sounds/in_game.wav" type="AudioStream" id=19]
 [ext_resource path="res://sounds/boost_end.wav" type="AudioStream" id=20]
 [ext_resource path="res://sounds/boost_start.wav" type="AudioStream" id=21]
+[ext_resource path="res://MainViewportSprite.gd" type="Script" id=22]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
 background_color = Color( 0.0588235, 0.164706, 0.247059, 1 )
 glow_enabled = true
 
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+uniform float wave_pos : hint_range(0.0, 1.0) = 0.5;
+uniform float wave_size : hint_range(0.0, 1.0) = 0.1;
+uniform vec4 ripple_color : hint_color;
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	if (wave_size > 0.0) {
+		if (UV.y < wave_pos + wave_size && UV.y > wave_pos - wave_size) {
+			vec4 color = texture(TEXTURE, UV - vec2(0.0, wave_size));
+//			COLOR = mix(color, ripple_color, UV.y);
+			COLOR = color;
+			if (UV.y > wave_pos + 0.9 * wave_size || UV.y < wave_pos - 0.9 * wave_size) {
+				COLOR = mix(color, ripple_color, UV.y);
+			}
+		}
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
+shader_param/wave_pos = 0.04
+shader_param/wave_size = 0.00666668
+shader_param/ripple_color = Color( 1, 1, 1, 0.0862745 )
+
 [sub_resource type="ViewportTexture" id=2]
 viewport_path = NodePath("Viewport")
+
+[sub_resource type="Animation" id=11]
+resource_name = "BoostRipple"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/wave_pos")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:material:shader_param/wave_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.1, 0.0 ]
+}
 
 [sub_resource type="DynamicFont" id=3]
 size = 80
@@ -67,8 +123,13 @@ script = ExtResource( 11 )
 environment = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 10 )
 position = Vector2( 337.972, 360.918 )
 texture = SubResource( 2 )
+script = ExtResource( 22 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+anims/BoostRipple = SubResource( 11 )
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 590, 680 )
@@ -99,8 +160,9 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="GameOverMenu"]
+margin_top = -1.33484
 margin_right = 579.0
-margin_bottom = 157.0
+margin_bottom = 155.665
 custom_fonts/font = SubResource( 3 )
 text = "GAME OVER"
 align = 1
