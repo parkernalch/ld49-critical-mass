@@ -1,6 +1,7 @@
 extends Node
 
 signal PlayerFuelLevelChanged(new_level)
+signal PickedUpFuel(value)
 signal PlayerTookDamage(areas_are_healthy)
 signal PlayerPickedUpPower(power)
 signal PlayerMovementSpeedChanged(new_speed)

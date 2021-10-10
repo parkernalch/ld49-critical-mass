@@ -6,7 +6,7 @@ export var movement_speed : float = 1.0
 var vertical_speed : float = 1.0
 var max_speed : float = 5.0
 var boost_speed : float = 10.0
-var fuel_level : int = 50
+var fuel_level : float = 50
 var ship_areas_are_healthy : Array = [ true, true, true ] # [left, body, right]
 
 var is_collecting : bool = true
@@ -15,6 +15,8 @@ var spawn_location : Vector2
 
 var neutrons_collected : int = 0
 var boost_time : float = 0.0
+
+var collection_radius : float = 3000.0
 
 onready var collection_area : Area2D = $CollectionArea
 onready var damage_area : Area2D = $DamageArea
@@ -25,15 +27,18 @@ onready var left_wing_particles : CPUParticles2D = $damaged_left_wing
 onready var body_particles : CPUParticles2D = $damaged_body
 onready var explosion_particles : CPUParticles2D = $explosion
 onready var repulse_particles : CPUParticles2D = $repulse
+onready var magnet_particles : CPUParticles2D = $magnetism
 
 func _ready():
 	spawn_location = transform.origin
-	collection_area.connect('body_entered', self, '_on_collisionArea_body_entered')
 	damage_area.connect('body_entered', self, '_on_damageArea_body_entered')
 	Events.connect("ShipWasDestroyed", self, '_on_ship_wasDestroyed')
 	Events.connect("StartGame", self, "_on_StartGame")
 	fuel_timer.connect('timeout', self, '_on_fuelTimer_timeout')
 	Events.connect("PickupAcquired", self, '_on_pickup_acquired')
+	add_to_group("player")
+	Events.connect("PickedUpFuel", self, '_on_fuel_pickedUp')
+	$MagnetTimer.connect("timeout", self, 'demagnetize')
 	initialize()
 	
 func initialize():	
@@ -85,6 +90,9 @@ func _process(delta):
 		sprite.flip_h = true
 		if not ship_areas_are_healthy[0]:
 			movement_vector *= 0.5
+	if not ship_areas_are_healthy[1]:
+		fuel_level -= delta
+		Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
 	if Input.is_action_just_pressed("ui_fire"):
 		if is_boosting:
 			boost_end()
@@ -126,6 +134,17 @@ func _on_fuelTimer_timeout():
 		Events.emit_signal("ShipWasDestroyed")
 	Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
 
+func _on_fuel_pickedUp(amount):
+	fuel_level += amount
+	Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
+	if vertical_speed < max_speed and not is_boosting:
+		vertical_speed += 0.1
+		Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
+	neutrons_collected += 1
+	if fuel_level >= 100:
+		boost_start()
+	pass
+
 func _on_ship_wasDestroyed():
 	die()
 
@@ -147,40 +166,13 @@ func deferred_game_ended():
 	set_process(false)
 	set_physics_process(false)
 
-func _on_collisionArea_body_entered(body):
-	if body is Neutron:
-		if is_collecting:
-			body.collect(self)
-			fuel_level += body.size
-			if vertical_speed < max_speed:
-				vertical_speed += 0.1
-				Events.emit_signal("PlayerMovementSpeedChanged", vertical_speed)
-			neutrons_collected += 1
-			Events.emit_signal("PlayerFuelLevelChanged", fuel_level)
-			if fuel_level >= 100:
-				boost_start()
-			pass
-		else:
-			pass
-	elif body is Pickup:
-		body.pickup(self)
-	pass
-
 func _on_damageArea_body_entered(body):
-	if body is Neutron:
-		body.queue_free()
-	elif body is Obstacle:
+	if body is Obstacle:
 		take_damage(body.transform.origin)
 		Events.emit_signal("PlayerTookDamage", ship_areas_are_healthy)
 		right_wing_particles.emitting = not ship_areas_are_healthy[2]
 		body_particles.emitting = not ship_areas_are_healthy[1]
 		left_wing_particles.emitting = not ship_areas_are_healthy[0]
-		body.queue_free()
-	elif body is Pickup:
-		if body.type == Pickup.PICKUP.SHIELD:
-			Events.emit_signal("PlayerShieldToggled", true)
-		elif body.type == Pickup.PICKUP.HEALTH:
-			heal()
 		body.queue_free()
 	pass
 
@@ -209,7 +201,22 @@ func heal():
 
 func _on_pickup_acquired(type, value):
 	print('pickup: ' + str(type) + ' (' + str(value) + ')')
+	if type == Pickup.PICKUP.SHIELD:
+		Events.emit_signal("PlayerShieldToggled", true)
+	elif type == Pickup.PICKUP.HEALTH:
+		heal()
+	elif type == Pickup.PICKUP.MAGNET:
+		magnetize()
 	pass
+
+func magnetize():
+	collection_radius = 10000.0
+	$MagnetTimer.start()
+	magnet_particles.emitting = true
+
+func demagnetize():
+	collection_radius = 4000.0
+	magnet_particles.emitting = false
 
 func take_damage(position):
 	var offset = (transform.origin - position).x

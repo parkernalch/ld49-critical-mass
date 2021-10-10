@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://img/ship_in_game.png" type="Texture" id=2]
@@ -7,9 +7,6 @@
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.5347
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 108.298
 
 [sub_resource type="CapsuleShape2D" id=3]
 resource_local_to_scene = true
@@ -20,8 +17,8 @@ height = 0.0
 _data = [ Vector2( 0, 0.986364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0681818 ), -2.37413, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=5]
-offsets = PoolRealArray( 0, 0.123134, 1 )
-colors = PoolColorArray( 0.955078, 0.636796, 0.0596924, 1, 0.490234, 0.490234, 0.490234, 1, 1, 1, 1, 1 )
+offsets = PoolRealArray( 0, 0.516779, 1 )
+colors = PoolColorArray( 0.554688, 0.937378, 1, 1, 1, 1, 1, 1, 0.96875, 1, 0, 1 )
 
 [sub_resource type="Curve" id=6]
 _data = [ Vector2( 0, 0 ), 0.0, 2.38826, 0, 0, Vector2( 0.989691, 1 ), 0.0375778, 0.0, 0, 0 ]
@@ -39,11 +36,6 @@ vframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-
-[node name="CollectionArea" type="Area2D" parent="."]
-
-[node name="CollectionShape" type="CollisionShape2D" parent="CollectionArea"]
-shape = SubResource( 2 )
 
 [node name="DamageArea" type="Area2D" parent="."]
 
@@ -79,6 +71,19 @@ emitting = false
 texture = ExtResource( 3 )
 emission_shape = 2
 emission_rect_extents = Vector2( 5.408, 3.632 )
+scale_amount = 0.6
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+
+[node name="magnetism" type="CPUParticles2D" parent="."]
+position = Vector2( 0.145782, 6.24334 )
+emitting = false
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2( 0, 0 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
 scale_amount = 0.6
 scale_amount_curve = SubResource( 4 )
 color_ramp = SubResource( 5 )
@@ -120,3 +125,9 @@ color_ramp = SubResource( 7 )
 
 [node name="Shield" parent="." instance=ExtResource( 4 )]
 scale = Vector2( 3, 3 )
+
+[node name="MagnetTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[editable path="Shield"]

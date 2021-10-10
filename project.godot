@@ -29,7 +29,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Obstacle.gd"
 }, {
-"base": "KinematicBody2D",
+"base": "Node2D",
+"class": "OptimizedNeutron",
+"language": "GDScript",
+"path": "res://OptimizedNeutron.gd"
+}, {
+"base": "Node2D",
 "class": "Pickup",
 "language": "GDScript",
 "path": "res://Pickup.gd"
@@ -49,6 +54,7 @@ _global_script_class_icons={
 "NeutronPool": "",
 "NoiseSpawner": "",
 "Obstacle": "",
+"OptimizedNeutron": "",
 "Pickup": "",
 "Player": "",
 "Spawner": ""
