@@ -40,7 +40,8 @@ void fragment() {
 		if (UV.y < wave_pos + wave_size && UV.y > wave_pos - wave_size) {
 			vec4 color = texture(TEXTURE, UV - vec2(0.0, wave_size * abs(wave_pos - UV.y) / wave_size));
 			COLOR = color;
-			if (UV.y > wave_pos + 0.9 * wave_size || UV.y < wave_pos - 0.9 * wave_size) {
+//			if (UV.y > wave_pos + 0.9 * wave_size || UV.y < wave_pos - 0.9 * wave_size) {
+			if (UV.y < wave_pos - 0.9 * wave_size) {
 				COLOR = mix(color, ripple_color, UV.y);
 			}
 		}
@@ -79,10 +80,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.25 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.02, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 0.1, 0.0 ]
+"values": [ 0.0, 0.816, 0.1, 0.0 ]
 }
 
 [sub_resource type="DynamicFont" id=6]

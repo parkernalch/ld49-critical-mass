@@ -98,6 +98,11 @@ func _process(delta):
 			boost_end()
 		else:
 			boost_start()
+	var healthy_count = ship_areas_are_healthy.count(true)
+	if healthy_count > 0:
+		left_wing_particles.emitting = not ship_areas_are_healthy[0]
+		right_wing_particles.emitting = not ship_areas_are_healthy[2]
+		body_particles.emitting = not ship_areas_are_healthy[1]
 
 func _physics_process(delta):
 	move_and_collide(movement_vector)
@@ -200,7 +205,6 @@ func heal():
 	pass
 
 func _on_pickup_acquired(type, value):
-	print('pickup: ' + str(type) + ' (' + str(value) + ')')
 	if type == Pickup.PICKUP.SHIELD:
 		Events.emit_signal("PlayerShieldToggled", true)
 	elif type == Pickup.PICKUP.HEALTH:
@@ -220,7 +224,6 @@ func demagnetize():
 
 func take_damage(position):
 	var offset = (transform.origin - position).x
-	print('offset: ' + str(offset))
 	if offset > 20:
 		damage_ship('left', offset)
 		ship_areas_are_healthy[0] = false

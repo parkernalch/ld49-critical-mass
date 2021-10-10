@@ -16,6 +16,8 @@ func _ready():
 	player = get_tree().get_nodes_in_group("player")[0]
 
 func _physics_process(delta):
+	if global_position.y > 700.0:
+		queue_free()
 	if not target:
 		move_direction = Vector2.DOWN
 	else:
