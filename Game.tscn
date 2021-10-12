@@ -1,17 +1,19 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://img/play_field.png" type="Texture" id=1]
 [ext_resource path="res://NoiseSpawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://KillZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game.gd" type="Script" id=5]
-[ext_resource path="res://ObstacleMedium.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ObstacleLong.tscn" type="PackedScene" id=7]
-[ext_resource path="res://ObstacleShort.tscn" type="PackedScene" id=8]
 [ext_resource path="res://OptimizedNeutron.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ShieldPickup.tscn" type="PackedScene" id=10]
 [ext_resource path="res://HealthPickup.tscn" type="PackedScene" id=11]
 [ext_resource path="res://MagnetPickup.tscn" type="PackedScene" id=12]
+[ext_resource path="res://AsteroidBanana.tscn" type="PackedScene" id=13]
+[ext_resource path="res://AsteroidSpeck.tscn" type="PackedScene" id=14]
+[ext_resource path="res://AsteroidBig.tscn" type="PackedScene" id=15]
+[ext_resource path="res://AsteroidTbone.tscn" type="PackedScene" id=16]
+[ext_resource path="res://AsteroidSpud.tscn" type="PackedScene" id=17]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -99,18 +101,20 @@ position = Vector2( -2.05457, 292.716 )
 movement_speed = 5.0
 
 [node name="KillZone" parent="." instance=ExtResource( 4 )]
-position = Vector2( 4.41382, 451.114 )
+position = Vector2( 4.41382, 584.305 )
+scale = Vector2( 1.534, 1 )
 
 [node name="KillZone2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 4.41382, -488.886 )
+position = Vector2( 4.41382, -568.171 )
+scale = Vector2( 1.536, 1 )
 
 [node name="KillZone3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 386.414, 75.114 )
+position = Vector2( 533.658, 75.114 )
 rotation = 1.5708
 scale = Vector2( 2, 1 )
 
 [node name="KillZone4" parent="." instance=ExtResource( 4 )]
-position = Vector2( -387.586, 69.114 )
+position = Vector2( -572.585, 69.114 )
 rotation = 1.5708
 scale = Vector2( 2, 1 )
 
@@ -147,17 +151,17 @@ position = Vector2( -296, 0 )
 [node name="RightBound" parent="NeutronSpawner" index="1"]
 position = Vector2( 284, 0 )
 
-[node name="ObstacleSpawner" parent="." instance=ExtResource( 2 )]
+[node name="AsteroidSpawner" parent="." instance=ExtResource( 2 )]
 position = Vector2( 19.347, -336.247 )
-object_scenes = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]
+object_scenes = [ ExtResource( 13 ), ExtResource( 15 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 16 ) ]
 subdivisions = 3
 spawn_value = 0.5
 spawn_cooldown = 3.0
 
-[node name="LeftBound" parent="ObstacleSpawner" index="0"]
+[node name="LeftBound" parent="AsteroidSpawner" index="0"]
 position = Vector2( -296, 0 )
 
-[node name="RightBound" parent="ObstacleSpawner" index="1"]
+[node name="RightBound" parent="AsteroidSpawner" index="1"]
 position = Vector2( 284, 0 )
 
 [node name="PickupSpawn" parent="." instance=ExtResource( 2 )]
@@ -177,5 +181,5 @@ anims/PlayFieldLowWarning = SubResource( 6 )
 anims/PlayFieldWarning = SubResource( 7 )
 
 [editable path="NeutronSpawner"]
-[editable path="ObstacleSpawner"]
+[editable path="AsteroidSpawner"]
 [editable path="PickupSpawn"]

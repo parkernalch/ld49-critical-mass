@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://img/big.png" type="Texture" id=1]
+[ext_resource path="res://Obstacle.gd" type="Script" id=2]
+
+[node name="AsteroidBig" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="Collider" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( -54.7654, -227.338, -53.9717, -228.131, -125.405, -169.398, -191.282, -32.0875, -193.663, 93.3172, -80.1638, 209.991, 78.5763, 219.516, 221.442, 159.988, 234.142, 55.2196, 153.978, -102.727, 135.723, -188.446 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )

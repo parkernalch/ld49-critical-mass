@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://img/spud.png" type="Texture" id=1]
+[ext_resource path="res://Obstacle.gd" type="Script" id=2]
+
+[node name="AsteroidSpeck" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="Collider" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0.629944, -1.25995 )
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( -19.0487, -195.282, -87.7144, -161.894, -179.689, -98.8982, -184.098, 62.3717, -73.8553, 123.478, 26.3084, 66.1515, 79.855, -81.8893, 71.6656, -180.793 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )

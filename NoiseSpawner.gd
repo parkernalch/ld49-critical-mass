@@ -74,5 +74,14 @@ func spawn(position):
 	var object = object_scenes[choice].instance()
 	var spawn_offset = sin(randi()) * offset
 	object.global_position = position + (Vector2.RIGHT * spawn_offset)
-#	object.speed = 1.0
+	if object.has_method("set_angular_velocity"):
+		var angular_velocity = sin(randi()) * 25.0
+		object.set_angular_velocity(angular_velocity)
+	if object.has_method("set_velocity"):
+		var angle = rand_range(-PI / 2.0, PI / 2.0)
+		var relative_velocity = Vector2(sin(angle), cos(angle))
+		object.set_velocity(relative_velocity * 0.25)
+	if object.has_method("set_size"):
+		var _size = rand_range(0.10, 0.25)
+		object.set_size(_size)
 	get_parent().add_child(object)

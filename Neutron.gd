@@ -5,6 +5,7 @@ var speed : float = 1.0
 var composite_speed : float = 1.0
 var size : int = 2
 onready var sprite = $Sprite
+var angular_velocity
 
 var target
 

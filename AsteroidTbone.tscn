@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://img/tbone.png" type="Texture" id=1]
+[ext_resource path="res://Obstacle.gd" type="Script" id=2]
+[ext_resource path="res://shaders/pixelate.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 3 )
+shader_param/pixel_size = 500
+shader_param/resolution = 0
+
+[node name="AsteroidSpeck" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="Collider" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2( 0.629944, -1.25995 )
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( -11.4892, -223, -103.463, -170.084, -208.037, -164.414, -230.086, -15.1135, -199.217, 28.9838, -188.508, 122.848, -206.147, 195.923, -158.27, 222.382, -68.8156, 179.544, 6.77963, 59.2219, 114.503, 6.93515, 221.596, -74.9597, 237.345, -165.044, 186.948, -225.52 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )

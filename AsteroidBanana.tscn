@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://img/banana.png" type="Texture" id=1]
+[ext_resource path="res://Obstacle.gd" type="Script" id=2]
+
+[node name="AsteroidBig" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 2 )
+
+[node name="Collider" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( -112.283, -169.454, -148.191, -206.621, -199.847, -175.753, -209.927, -85.6691, -156.38, -11.9637, -7.0795, 61.7417, 48.987, 144.896, 62.2162, 219.862, 171.829, 236.241, 242.385, 148.676, 235.455, 20.1643, 175.609, -84.4091, -34.7978, -166.304 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
