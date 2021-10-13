@@ -2,10 +2,6 @@ extends Node2D
 
 onready var stats_panel : Control = $StatsPanel
 onready var game_over_screen : Control = $GameOverMenu
-onready var game_over_label : Label = $GameOverMenu/Label
-onready var retry_button : Button = $GameOverMenu/RetryButton
-onready var stats_button : Button = $GameOverMenu/StatsButton
-onready var start_button : Button = $GameOverMenu/StartButton
 
 # statistics
 onready var statistics = {
@@ -68,9 +64,6 @@ onready var statistics = {
 func _ready():
 	stats_panel.visible = false
 	game_over_screen.visible = true
-	retry_button.visible = false
-	stats_button.visible = false
-	game_over_label.visible = false
 	Events.connect("GameEndedOdometer", self, "_on_odometer_gameEnded")
 	Events.connect("GameEndedPlayer", self, "_on_player_gameEnded")
 	load_from_userdata()
@@ -159,10 +152,6 @@ func start_game():
 	
 func end_game():
 	game_over_screen.visible = true
-	start_button.visible = false
-	retry_button.visible = true
-	stats_button.visible = true
-	stats_panel.visible = false
 	save()
 	
 func toggle_stats():
@@ -179,3 +168,6 @@ func _on_StatsButton_pressed():
 
 func _on_CloseStatsButton_pressed():
 	toggle_stats()
+
+func _on_ResumeButton_pressed():
+	Events.emit_signal("GameUnpaused")

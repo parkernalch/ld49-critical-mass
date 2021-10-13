@@ -16,7 +16,15 @@ var move_direction : Vector2
 func _ready():
 	player = get_tree().get_nodes_in_group("player")[0]
 	Events.connect("GameEndedPlayer", self, "_on_game_ended")
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
 	pass
+
+func _on_GamePaused():
+	set_physics_process(false)
+	
+func _on_GameUnpaused():
+	set_physics_process(true)
 
 func _physics_process(delta):
 	if position.y > 700.0:

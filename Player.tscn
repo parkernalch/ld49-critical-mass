@@ -8,22 +8,22 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.5347
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=2]
 resource_local_to_scene = true
 radius = 29.3812
 height = 0.0
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 0.986364 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0681818 ), -2.37413, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.516779, 1 )
 colors = PoolColorArray( 0.554688, 0.937378, 1, 1, 1, 1, 1, 1, 0.96875, 1, 0, 1 )
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 0 ), 0.0, 2.38826, 0, 0, Vector2( 0.989691, 1 ), 0.0375778, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=6]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -41,7 +41,7 @@ shape = SubResource( 1 )
 
 [node name="DamageShape" type="CollisionShape2D" parent="DamageArea"]
 position = Vector2( 0, 8.02715 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="FuelConsumptionTimer" type="Timer" parent="."]
 
@@ -52,8 +52,8 @@ texture = ExtResource( 3 )
 emission_shape = 2
 emission_rect_extents = Vector2( 1.19, 3.632 )
 scale_amount = 0.25
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 
 [node name="damaged_right_wing" type="CPUParticles2D" parent="."]
 position = Vector2( 26.9029, 0 )
@@ -62,8 +62,8 @@ texture = ExtResource( 3 )
 emission_shape = 2
 emission_rect_extents = Vector2( 1.19, 3.632 )
 scale_amount = 0.25
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 
 [node name="damaged_body" type="CPUParticles2D" parent="."]
 position = Vector2( 0.145782, 6.24334 )
@@ -72,8 +72,8 @@ texture = ExtResource( 3 )
 emission_shape = 2
 emission_rect_extents = Vector2( 5.408, 3.632 )
 scale_amount = 0.6
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 
 [node name="magnetism" type="CPUParticles2D" parent="."]
 position = Vector2( 0.145782, 6.24334 )
@@ -85,8 +85,8 @@ direction = Vector2( 0, 0 )
 spread = 0.0
 gravity = Vector2( 0, 0 )
 scale_amount = 0.6
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 
 [node name="explosion" type="CPUParticles2D" parent="."]
 position = Vector2( 0.145782, 6.24334 )
@@ -105,8 +105,8 @@ gravity = Vector2( 0, 0 )
 initial_velocity = 303.1
 initial_velocity_random = 1.0
 scale_amount = 0.6
-scale_amount_curve = SubResource( 4 )
-color_ramp = SubResource( 5 )
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
 
 [node name="repulse" type="CPUParticles2D" parent="."]
 position = Vector2( 0.145782, 6.24334 )
@@ -120,8 +120,8 @@ texture = ExtResource( 3 )
 direction = Vector2( 0, 0 )
 gravity = Vector2( 0, 0 )
 scale_amount = 15.0
-scale_amount_curve = SubResource( 6 )
-color_ramp = SubResource( 7 )
+scale_amount_curve = SubResource( 5 )
+color_ramp = SubResource( 6 )
 
 [node name="Shield" parent="." instance=ExtResource( 4 )]
 scale = Vector2( 3, 3 )

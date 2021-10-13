@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://font/EdgeOfTheGalaxyPoster-3zRAp.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://font/NikkyouSans-mLKax.ttf" type="DynamicFontData" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://sounds/boost_end.wav" type="AudioStream" id=20]
 [ext_resource path="res://sounds/boost_start.wav" type="AudioStream" id=21]
 [ext_resource path="res://MainViewportSprite.gd" type="Script" id=22]
+[ext_resource path="res://GameOverMenu.gd" type="Script" id=23]
+[ext_resource path="res://MenuBox.tres" type="StyleBox" id=24]
+[ext_resource path="res://StatsPanel.gd" type="Script" id=25]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -35,12 +38,12 @@ uniform float wave_size : hint_range(0.0, 1.0) = 0.1;
 uniform vec4 ripple_color : hint_color;
 
 void fragment() {
+	// Ripple Wave
 	COLOR = texture(TEXTURE, UV);
 	if (wave_size > 0.0) {
 		if (UV.y < wave_pos + wave_size && UV.y > wave_pos - wave_size) {
 			vec4 color = texture(TEXTURE, UV - vec2(0.0, wave_size * abs(wave_pos - UV.y) / wave_size));
 			COLOR = color;
-//			if (UV.y > wave_pos + 0.9 * wave_size || UV.y < wave_pos - 0.9 * wave_size) {
 			if (UV.y < wave_pos - 0.9 * wave_size) {
 				COLOR = mix(color, ripple_color, UV.y);
 			}
@@ -155,9 +158,11 @@ margin_left = 49.0
 margin_top = 299.0
 margin_right = 628.0
 margin_bottom = 440.0
+script = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+stats_panel_path = NodePath("../StatsPanel")
 
 [node name="Label" type="Label" parent="GameOverMenu"]
 margin_top = -1.33484
@@ -175,18 +180,38 @@ margin_left = 134.848
 margin_top = 97.39
 margin_right = 287.848
 margin_bottom = 134.39
+custom_styles/focus = ExtResource( 24 )
 custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 0.701961, 0.741176, 0.807843, 1 )
 text = "RETRY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResumeButton" type="Button" parent="GameOverMenu"]
+margin_left = 134.848
+margin_top = 97.39
+margin_right = 287.848
+margin_bottom = 134.39
+custom_styles/focus = ExtResource( 24 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 0.701961, 0.741176, 0.807843, 1 )
+text = "RESUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StartButton" type="Button" parent="GameOverMenu"]
 margin_left = 220.251
-margin_top = 20.2272
+margin_top = 96.7365
 margin_right = 373.251
-margin_bottom = 57.2272
+margin_bottom = 133.736
+custom_styles/focus = ExtResource( 24 )
 custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 0.701961, 0.741176, 0.807843, 1 )
 text = "START"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -197,7 +222,10 @@ margin_left = 301.909
 margin_top = 97.39
 margin_right = 454.909
 margin_bottom = 134.39
+custom_styles/focus = ExtResource( 24 )
 custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.701961, 0.741176, 0.807843, 1 )
+custom_colors/font_color_hover = Color( 0.701961, 0.741176, 0.807843, 1 )
 text = "STATS"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -209,6 +237,7 @@ margin_left = 56.0
 margin_top = 49.0
 margin_right = 914.0
 margin_bottom = 714.0
+script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -411,6 +440,9 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 24.0
 margin_bottom = 24.0
+custom_styles/focus = ExtResource( 24 )
+custom_colors/font_color = Color( 0.964706, 0.964706, 0.964706, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 text = "X"
 
 [node name="AudioManager" type="Node" parent="."]
@@ -491,6 +523,9 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="GameOverMenu/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="GameOverMenu/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="GameOverMenu/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="GameOverMenu/StatsButton" to="." method="_on_StatsButton_pressed"]
+[connection signal="visibility_changed" from="StatsPanel" to="StatsPanel" method="_on_StatsPanel_visibility_changed"]
+[connection signal="visibility_changed" from="StatsPanel" to="GameOverMenu" method="_on_StatsPanel_visibility_changed"]
 [connection signal="pressed" from="StatsPanel/Panel/CloseStatsButton" to="." method="_on_CloseStatsButton_pressed"]

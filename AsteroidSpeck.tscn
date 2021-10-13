@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://img/speck.png" type="Texture" id=1]
 [ext_resource path="res://Obstacle.gd" type="Script" id=2]
+[ext_resource path="res://asteroid_gradient.tres" type="Gradient" id=3]
+
+[sub_resource type="Curve" id=1]
+max_value = 100.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 100 ), 245.455, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0.0493827, 0 ), 0.0, 2.57727, 0, 0, Vector2( 1, 0 ), -2.94545, 0.0, 0, 0 ]
 
 [node name="AsteroidSpeck" type="KinematicBody2D"]
 collision_layer = 4
@@ -10,8 +18,27 @@ script = ExtResource( 2 )
 [node name="Collider" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0.629944, -1.25995 )
 scale = Vector2( 0.25, 0.25 )
-polygon = PoolVector2Array( -7.0795, -62.9905, -46.767, -28.3426, -50.5468, 24.5741, -17.7888, 73.711, 59.0663, 60.4818, 99.3839, -21.4131, 62.7023, -82.0906 )
+polygon = PoolVector2Array( -6.49022, -51.501, -42.8294, -21.7689, -47.5487, 24.7169, -16.6369, 70.7307, 51.0861, 58.9323, 89.313, -16.3416, 58.4011, -71.3223 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
+
+[node name="ExplosionParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 3
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 15.39
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 260.36
+damping = 100.0
+damping_curve = SubResource( 1 )
+scale_amount = 0.25
+scale_amount_random = 0.24
+scale_amount_curve = SubResource( 2 )
+color_ramp = ExtResource( 3 )

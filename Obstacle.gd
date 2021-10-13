@@ -8,9 +8,17 @@ var repulse_vector : Vector2 = Vector2.ZERO
 func _ready():
 	rotation_degrees = rand_range(0, 180)
 	Events.connect("ShipWasDestroyed", self, "_on_ship_wasDestroyed")
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
 	add_to_group('obstacles')
 	$Sprite.self_modulate = Color("#5a4c3e");
 	pass
+
+func _on_GamePaused():
+	set_physics_process(false)
+
+func _on_GameUnpaused():
+	set_physics_process(true)
 
 func set_angular_velocity(vel):
 	angular_velocity = vel
@@ -37,3 +45,9 @@ func _on_ship_wasDestroyed():
 func repulse(direction, magnitude):
 	repulse_vector = direction * magnitude
 	
+func destroy():
+	$Sprite.visible = false
+	$Collider.disabled = true
+	$ExplosionParticles.emitting = true
+	yield(get_tree().create_timer(0.25), "timeout")
+	queue_free()

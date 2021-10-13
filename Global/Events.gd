@@ -12,6 +12,8 @@ signal GameEndedPlayer(stats)
 signal GameEndedOdometer(value)
 
 signal StartGame()
+signal GamePaused()
+signal GameUnpaused()
 
 signal DifficultyIncreased()
 

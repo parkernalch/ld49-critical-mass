@@ -38,8 +38,18 @@ func _ready():
 	Events.connect("PickupAcquired", self, '_on_pickup_acquired')
 	add_to_group("player")
 	Events.connect("PickedUpFuel", self, '_on_fuel_pickedUp')
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
 	$MagnetTimer.connect("timeout", self, 'demagnetize')
 	initialize()
+	
+func _on_GameUnpaused():
+	set_process(true)
+	set_physics_process(true)
+	
+func _on_GamePaused():
+	set_process(false)
+	set_physics_process(false)
 	
 func initialize():	
 	fuel_timer.wait_time = 0.5
@@ -98,6 +108,8 @@ func _process(delta):
 			boost_end()
 		else:
 			boost_start()
+	if Input.is_action_just_pressed("ui_cancel"):
+		Events.emit_signal("GamePaused")
 	var healthy_count = ship_areas_are_healthy.count(true)
 	if healthy_count > 0:
 		left_wing_particles.emitting = not ship_areas_are_healthy[0]
@@ -178,7 +190,10 @@ func _on_damageArea_body_entered(body):
 		right_wing_particles.emitting = not ship_areas_are_healthy[2]
 		body_particles.emitting = not ship_areas_are_healthy[1]
 		left_wing_particles.emitting = not ship_areas_are_healthy[0]
-		body.queue_free()
+		if body.has_method("destroy"):
+			body.destroy()
+		else:
+			body.queue_free()
 	pass
 
 func heal():

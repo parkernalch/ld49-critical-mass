@@ -44,7 +44,7 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/bar_width = 1.0
 shader_param/screen_color = Color( 0, 0.105882, 0.192157, 1 )
-shader_param/bar_color = Color( 0.328757, 0.0450849, 0.0818208, 1 )
+shader_param/bar_color = Color( 0, 0.105882, 0.192157, 1 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 33.4923, 52.3557 )

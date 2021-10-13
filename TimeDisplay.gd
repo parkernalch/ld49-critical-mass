@@ -19,6 +19,16 @@ func _ready():
 	set_display()
 	Events.connect("ShipWasDestroyed", self, "_on_ship_wasDestroyed")
 	Events.connect("StartGame", self, "_on_StartGame")
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
+	set_process(false)
+	pass
+
+func _on_GameUnpaused():
+	set_process(true)
+	pass
+	
+func _on_GamePaused():
 	set_process(false)
 	pass
 

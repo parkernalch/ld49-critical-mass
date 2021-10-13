@@ -27,6 +27,8 @@ func _ready():
 	Events.connect("StartGame", self, "_on_startGame")
 	Events.connect("GameEndedPlayer", self, "_on_endGame")
 	Events.connect("DifficultyIncreased", self, "_on_difficultyIncreased")
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
 	var x_pos_left : float =  left_bound.transform.origin.x
 	var x_pos_right : float = right_bound.transform.origin.x
 	offset = abs(x_pos_right - x_pos_left)
@@ -37,8 +39,13 @@ func _ready():
 			"position": Vector2(x_pos_left + 3 * (step_size * i) / 2, transform.origin.y),
 			"spawn_pos": 0.0			
 		})
-	print(spawn_locations)
 	set_process(false)
+
+func _on_GamePaused():
+	set_process(false)
+	
+func _on_GameUnpaused():
+	set_process(true)
 		
 func _process(delta):
 	y_pos += Global.travel_speed * delta

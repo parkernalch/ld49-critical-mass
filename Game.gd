@@ -6,6 +6,14 @@ func _ready():
 	Events.connect("StartGame", self, "_on_StartGame")
 	Events.connect("GameEndedPlayer", self, "_on_GameOver")
 	Events.connect("PlayerFuelLevelChanged", self, "_on_player_fuelLevelChanged")
+	Events.connect("GamePaused", self, "_on_GamePaused")
+	Events.connect("GameUnpaused", self, "_on_GameUnpaused")
+	pass
+	
+func _on_GamePaused():
+	pass
+	
+func _on_GameUnpaused():
 	pass
 	
 func _on_StartGame():
